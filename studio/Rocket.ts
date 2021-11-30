@@ -19,4 +19,32 @@ export class Rocket {
         }
         return total;
     }
+
+    currentMassKg(): number {
+        return this.sumMass(this.astronauts) + this.sumMass(this.cargoItems);
+    }
+
+    canAdd(item: Payload): boolean {
+        if (this.currentMassKg() + item.massKg <= this.totalCapacityKg) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    addCargo(cargo: Cargo): boolean {
+        const checkNextItem = this.canAdd(cargo);
+        if (checkNextItem) {
+            this.cargoItems.push(cargo);
+            return true;
+        } else return false;
+    }
+
+    addAstronaut(astronaut: Astronaut) {
+        const checkNextAstronaut = this.canAdd(astronaut);
+        if (checkNextAstronaut) {
+            this.astronauts.push(astronaut);
+            return true;
+        } else return false;
+    }
 }
